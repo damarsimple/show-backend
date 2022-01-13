@@ -1,10 +1,10 @@
 import { objectType } from "nexus";
-
+import { Genre as GenreType } from "nexus-prisma";
 export const Genre = objectType({
-  name: "Genre",
-
+  name: GenreType.$name,
   definition(t) {
-    t.int("id");
-    t.string("name");
+    t.field(GenreType.id);
+    t.field(GenreType.name);
+    t.field(GenreType.shows);
   },
 });

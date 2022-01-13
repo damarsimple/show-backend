@@ -1,7 +1,7 @@
 import { PrismaClient } from "@prisma/client";
 
 export interface Context {
-  db: PrismaClient;
+  prisma: PrismaClient;
 }
 
 const db = new PrismaClient({
@@ -9,5 +9,5 @@ const db = new PrismaClient({
 });
 
 export const context: Context = {
-  db,
+  prisma: db,
 };
