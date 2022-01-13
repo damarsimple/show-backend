@@ -1,0 +1,69 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id       Int    @id @default(autoincrement())
+  email    String @unique
+  password String
+  username String
+}
+
+model Show {
+  id            Int      @id @default(autoincrement())
+  name          String
+  description   String
+  image_potrait String
+  image_wide    String
+  director      String
+  year          Int
+  rating        String
+  casts         Cast[]
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  genres        Genre[]
+}
+
+enum Gender {
+  FEMALE
+  MALE
+}
+
+model Actor {
+  id        Int      @id @default(autoincrement())
+  name      String
+  image     String
+  dob       DateTime
+  gender    Gender
+  casts     Cast[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Cast {
+  id      Int    @id @default(autoincrement())
+  roles   String
+  showId  Int
+  show    Show   @relation(fields: [showId], references: [id])
+  actorId Int
+
+  actor     Actor    @relation(fields: [actorId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Genre {
+  id        Int      @id @default(autoincrement())
+  name      String
+  shows     Show[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
