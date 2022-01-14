@@ -14,11 +14,19 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum PLAN {
+  FREE
+  PREMIUM
+  ECONOMY
+}
+
 model User {
-  id       Int    @id @default(autoincrement())
-  email    String @unique
+  id       Int     @id @default(autoincrement())
+  email    String  @unique
   password String
   username String
+  plan     PLAN
+  genres   Genre[]
 }
 
 model Show {
@@ -68,6 +76,7 @@ model Genre {
   id        Int      @id @default(autoincrement())
   name      String
   shows     Show[]
+  users     User[]
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }

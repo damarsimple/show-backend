@@ -2,14 +2,44 @@
 ### Do not make changes to this file directly
 
 
+type Auth {
+  message: String!
+  status: Boolean!
+  token: String
+  user: User
+}
+
 type Genre {
   id: Int!
   name: String!
   shows: [Show!]!
 }
 
+type Mutation {
+  genreCreate(name: String!): Genre
+  genreDelete(id: Int!): Genre
+  genreUpdate(id: Int!, name: String!): Genre
+  login(password: String!, username: String!): Auth
+  register(email: String!, genres: [Int]!, password: String!, plan: PLAN!, username: String!): Auth
+  showCreate(description: String!, director: String!, image_potrait: String!, image_wide: String!, name: String!, rating: String!, year: Int!): Show
+  showDelete(id: Int!): Show
+  showUpdate(id: Int!, name: String!): Show
+}
+
+enum PLAN {
+  ECONOMY
+  FREE
+  PREMIUM
+}
+
 type Query {
+  genre(id: Int!): Genre
+  genres: [Genre]
+  me: User
+  recomendations: [Show]
+  show(id: Int!): Show
   shows: [Show]
+  trending: [Show]
 }
 
 type Show {
@@ -24,5 +54,8 @@ type Show {
 }
 
 type User {
+  email: String!
   id: Int!
+  plan: PLAN!
+  username: String!
 }

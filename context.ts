@@ -1,7 +1,8 @@
-import { PrismaClient } from "@prisma/client";
+import { PrismaClient, User } from "@prisma/client";
 
 export interface Context {
   prisma: PrismaClient;
+  user?: Partial<User>;
 }
 
 const db = new PrismaClient({
